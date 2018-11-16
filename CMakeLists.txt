@@ -23,7 +23,12 @@ set(MY_FLAGS "-g -O -Wall -Weffc++ -pedantic  \
     -Wunused-value  -Wunused-variable  -Wvariadic-macros \
     -Wvolatile-register-var  -Wwrite-strings -Wno-error=padded")
 
+file(GLOB SOURCE 
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+    )
+
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_FLAGS}")
 
-add_executable(run main.cpp)
+add_executable(run ${SOURCE})
