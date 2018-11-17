@@ -2,7 +2,7 @@
 // Created by ktulhu on 17/11/2018.
 //
 
-#include "../include/xorshift.h"
+#include "xorshift.h"
 
 uint64_t prng::s[2] = {42};
 
