@@ -31,4 +31,9 @@ file(GLOB SOURCE
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_FLAGS}")
 
+include_directories(include)
+
+add_library(pRNG STATIC prng/xorshift.cpp)
+
 add_executable(run ${SOURCE})
+target_link_libraries(run pRNG)
