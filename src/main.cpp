@@ -1,10 +1,9 @@
-#include "xorshift.h"
+#include <PRNG.h>
 #include <iostream>
 
-
 int main() {
-	for (int i = 0; i<100; i++) {
-		std::cout << prng::xorshift128plus() << std::endl;
+	for (int i = 0; i<1000; i++) {
+		printf("%0.20f\n", prng::rdouble(0, 1));
 	}
 	return 0;
 }

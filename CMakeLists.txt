@@ -27,13 +27,13 @@ file(GLOB SOURCE
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
     )
 
-
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_FLAGS}")
 
 include_directories(include)
 
-add_library(pRNG STATIC prng/xorshift.cpp)
+add_library(pRNG STATIC prng/PRNG.cpp)
+# set_target_properties(pRNG PROPERTIES PUBLIC_HEADER include/xorshift.h)
 
 add_executable(run ${SOURCE})
 target_link_libraries(run pRNG)

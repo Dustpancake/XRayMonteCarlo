@@ -10,6 +10,10 @@
 namespace prng {
     extern uint64_t s[2];
     uint64_t xorshift128plus();
-}
+
+    float rfloat(float lower, float upper);
+    double rdouble(double lower, double upper);
+    long double rldouble(long double lower, long double upper);
+};
 
 #endif //XRAYMONTECARLO_XORSHIFT_H
