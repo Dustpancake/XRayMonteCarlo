@@ -5,15 +5,17 @@
 #include <PRNG.h>
 #include <limits>
 
-uint64_t prng::s[2] = {42};
+uint64_t prng::s[2] = {448232};
 
 uint64_t prng::xorshift128plus() {
-    uint64_t x = s[0];
-    uint64_t const y = s[1];
-    s[0] = y;
-    x ^= x << 23; // a
-    s[1] = x ^ y ^ (x >> 17) ^ (y >> 26); // b, c
-    return s[1] + y;
+    uint64_t a = s[0], b = s[1];
+    s[0] = b;
+    a ^= a << 23;
+    a ^= a >> 17;
+    a ^= b;
+    a ^= b >> 26;
+    s[1] = a;
+    return a + b;
 }
 
 template<typename T>
