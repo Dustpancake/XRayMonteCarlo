@@ -76,7 +76,9 @@ include_directories(include)
 # --- construct and add pseudo-random-number-generator lib
 add_library(pRNG SHARED prng/PRNG.cpp)
 # --- set compiler flag for prng library to optimize for speed
-set_target_properties(pRNG PROPERTIES COMPILE_FLAGS "-Ofast")
+if (NOT ${IS_LINAPP})
+    set_target_properties(pRNG PROPERTIES COMPILE_FLAGS "-Ofast")
+endif()
 set_target_properties(pRNG PROPERTIES PUBLIC_HEADER include/xorshift.h)
 
 add_executable(run ${SOURCE})
