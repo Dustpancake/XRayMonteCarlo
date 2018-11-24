@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.2)
+cmake_minimum_required(VERSION 2.8)
 project(XRayMonteCarlo)
 
 
@@ -24,41 +24,21 @@ find_package(ROOT REQUIRED COMPONENTS RIO Net)
 if(ROOT)
     message(FATAL_ERROR "Could not find ROOT")
 else()
-    message("ROOT found!")
+    message("+ found ROOT")
 endif()
 
 # --- include ROOT
 if(${IS_LINAPP})
     include_directories(${ROOT_INCLUDE_DIRS})
-    message("On linapp server!")
+    message("+ on linapp server")
 
     set(MY_FLAGS "-std=c++0x")
 else()
+    set(CMAKE_MACOSX_RPATH 1)
     include(${ROOT_USE_FILE})
-    message("On personal computer!")
+    message("+ on personal computer")
 
-    # --- omitted Werror cus root is bad
-    set(MY_FLAGS "-g -O -Wall -Weffc++ -pedantic  \
-        -pedantic-errors -Wextra -Waggregate-return -Wcast-align \
-        -Wcast-qual  -Wchar-subscripts  -Wcomment -Wconversion \
-        -Wdisabled-optimization \
-        -Wfloat-equal  -Wformat  -Wformat=2 \
-        -Wformat-nonliteral -Wformat-security  \
-        -Wformat-y2k \
-        -Wimplicit  -Wimport  -Winit-self  -Winline \
-        -Winvalid-pch   \
-        -Wunavailable-declarations  -Wlong-long -Wmissing-braces \
-        -Wmissing-field-initializers -Wmissing-format-attribute   \
-        -Wmissing-include-dirs -Wmissing-noreturn \
-        -Wpacked  -Wpadded -Wparentheses  -Wpointer-arith \
-        -Wredundant-decls -Wreturn-type \
-        -Wsequence-point  -Wshadow -Wsign-compare  -Wstack-protector \
-        -Wstrict-aliasing -Wstrict-aliasing=2 -Wswitch  -Wswitch-default \
-        -Wswitch-enum -Wtrigraphs  -Wuninitialized \
-        -Wunknown-pragmas  -Wunreachable-code -Wunused \
-        -Wunused-function  -Wunused-label  -Wunused-parameter \
-        -Wunused-value  -Wunused-variable  -Wvariadic-macros \
-        -Wvolatile-register-var  -Wwrite-strings -Wno-error=padded")
+    set(MY_FLAGS "-O")
 
     set(CMAKE_CXX_STANDARD 11)
 endif()
@@ -68,23 +48,43 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_FLAGS}")
 # --- find source files
 file(GLOB SOURCE 
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/pipeline/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/pipeline/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/plottools/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/plottools/*.h"
     )
+
+# --- include Boost libraries
+find_package(Boost REQUIRED)
+if (Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+    message("+ found Boost")
+else()
+    message(FATAL_ERROR "Could not find Boost.")
+endif ()
 
 # --- include dir lib include
 include_directories(include)
 
-# --- construct and add pseudo-random-number-generator lib
-add_library(pRNG SHARED prng/PRNG.cpp)
-# --- set compiler flag for prng library to optimize for speed
+# --- construct and add custom lib with boost wrapper
+file(GLOB SUPPORT_LIBS "${CMAKE_CURRENT_SOURCE_DIR}/supportlib/*.cpp")
+add_library(SupportLib SHARED ${SUPPORT_LIBS})
+
+
+# --- set compiler flag for supportlib library to optimize for speed
 if (NOT ${IS_LINAPP})
-    set_target_properties(pRNG PROPERTIES COMPILE_FLAGS "-Ofast")
+    set_target_properties(SupportLib PROPERTIES COMPILE_FLAGS "-O2")
 endif()
-set_target_properties(pRNG PROPERTIES PUBLIC_HEADER include/xorshift.h)
+# set_target_properties(SupportLib PROPERTIES PUBLIC_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/include/SupportLib.h")
+
+# --- link ROOT with customs
+target_link_libraries(SupportLib ${ROOT_LIBRARIES})
 
 add_executable(run ${SOURCE})
 
+
 # --- link with customs
-target_link_libraries(run pRNG)
+target_link_libraries(run SupportLib)
 
 # ---- link with ROOT
 target_link_libraries(run ${ROOT_LIBRARIES})
