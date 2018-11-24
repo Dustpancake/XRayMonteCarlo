@@ -5,7 +5,7 @@
 #include <PRNG.h>
 #include <limits>
 
-uint64_t prng::s[2] = {448232};
+uint64_t prng::s[2] = {448232, 99};
 
 uint64_t prng::xorshift128plus() {
     uint64_t a = s[0], b = s[1];
@@ -39,4 +39,11 @@ double prng::rdouble(double lower, double upper) {
 
 long double prng::rldouble(long double lower, long double upper) {
     return rand<long double>(lower, upper);
+}
+
+void prng::ncallback(int n, double lower, double upper, const std::function<void(double)> &callback) {
+    for (int i = 0; i<n; i++) {
+        double r = prng::rdouble(lower, upper);
+        callback(r);
+    }
 }
