@@ -36,7 +36,7 @@ void rngtest(){
 
 void test_fetching(){
     // url http://henke.lbl.gov/tmp/xray7615.dat
-    system("curl http://henke.lbl.gov/tmp/xray7615.dat > ../xraydata/test.txt");
+    system("curl http://henke.lbl.gov/tmp/xray7615.dat > ../xraydata/e_spectra/test.txt");
 }
 
 void pvec(const std::vector<double>& v) {

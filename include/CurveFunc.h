@@ -17,6 +17,7 @@ public:
     // - can safely let them run out of scope
     // - FileData however must perish after all instances
     //   to this class are deleted
+    CurveFunc();
     explicit CurveFunc(std::shared_ptr<FileData>) noexcept;
     virtual ~CurveFunc() noexcept;
 
@@ -25,6 +26,8 @@ public:
 private:
     int place(double x) const;
     double interpolate3n(double x) const;
+
+    // p(x) returns height
     double px(double x, int i[3]) const noexcept;
     std::vector<double> *xvec, *yvec;
     const int size;

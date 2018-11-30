@@ -48,15 +48,21 @@ void grph::plot_file(const std::string &path, const std::string &save_path) {
     p.make_plot(save_path);
 }
 
-void grph::plot_data(FileData* fd, const std::string &save_pate) {
+void grph::plot_data(FileData* fd, const std::string &save_path) {
     Plot<double> p{fd};
-
+    p.make_plot(save_path);
 }
 
-void grph::plot_data(FileData* fd, const std::string &title, const std::string &save_pate) {
-
+void grph::plot_data(FileData* fd, const std::string &title, const std::string &save_path) {
+    Plot<double> p{fd};
+    p.title = title;
+    p.make_plot(save_path);
 }
 
-void grph::plot_data(FileData *fd, const std::string &title, const std::string &xlabel, const std::string &ylabel, const std::string &save_pate) {
-
+void grph::plot_data(FileData *fd, const std::string &title, const std::string &xlabel, const std::string &ylabel, const std::string &save_path) {
+    Plot<double> p{fd};
+    p.title = title;
+    p.xlabel = xlabel;
+    p.ylabel = ylabel;
+    p.make_plot(save_path);
 }

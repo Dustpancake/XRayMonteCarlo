@@ -12,8 +12,6 @@
 struct FileData{
     std::vector<double> x;
     std::vector<double> y;
-    //TODO remember to use size for a lot of functions down the line
-    //you're too tired to do it at the moment
 };
 
 struct FileParse {

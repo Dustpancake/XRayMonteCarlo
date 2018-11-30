@@ -5,8 +5,9 @@
 #include <CurveFunc.h>
 #include <iostream>
 
-CurveFunc::CurveFunc(std::shared_ptr<FileData> fd) noexcept : xvec{&(fd->x)}, yvec{&(fd->y)}, size{(int)fd->x.size()} {
-    // std::cout << "LENGTH OF DATA = " << size << std::endl;
+CurveFunc::CurveFunc(std::shared_ptr<FileData> fd) noexcept
+    :   xvec{&(fd->x)},   yvec{&(fd->y)},
+        size{(int)fd->x.size()}     {
 }
 
 CurveFunc::~CurveFunc() noexcept {
@@ -23,7 +24,6 @@ int CurveFunc::place(double x) const {
         if (x < i) break;
         count++;
     }
-    // std::cout << "placed at " << count << std::endl;
     return count;
 }
 
@@ -58,3 +58,4 @@ double CurveFunc::px(double x, int i[3]) const noexcept {
     }
     return running_sum;
 }
+

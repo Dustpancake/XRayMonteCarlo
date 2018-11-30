@@ -3,3 +3,12 @@
 //
 
 #include "XRaySpectrum.h"
+
+XRaySpectrum::XRaySpectrum(const std::string& path) noexcept {
+    FileParse fp{path};
+    fdata = fp.parse();
+    title = fp.title;
+}
+
+XRaySpectrum::~XRaySpectrum() {
+}

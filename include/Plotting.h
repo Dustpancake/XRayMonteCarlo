@@ -12,15 +12,15 @@
 namespace grph {
     void plot_file(const std::string &path, const std::string &save_path);
 
-    void plot_data(FileData* fd, const std::string &save_pate);
+    void plot_data(FileData* fd, const std::string &save_path);
 
     void plot_data(FileData* fd,    const std::string &title,
-                                    const std::string &save_pate);
+                                    const std::string &save_path);
 
     void plot_data(FileData *fd,    const std::string &title,
                                     const std::string &xlabel,
                                     const std::string &ylabel,
-                                    const std::string &save_pate);
+                                    const std::string &save_path);
 };
 
 #endif //XRAYMONTECARLO_PLOTTING_H

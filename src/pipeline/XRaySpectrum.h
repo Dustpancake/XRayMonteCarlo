@@ -6,13 +6,19 @@
 #define XRAYMONTECARLO_XRAYSPECTRUM_H
 
 #include <string>
+#include <memory>
+#include <FileParse.h>
+#include <PRNG.h>
 
 class XRaySpectrum {
 public:
     XRaySpectrum() = delete;
-    XRaySpectrum(std::string path);
+    explicit XRaySpectrum(const std::string& path) noexcept;
     virtual ~XRaySpectrum();
 
+private:
+    std::shared_ptr<FileData> fdata;
+    std::string title;
 };
 
 
