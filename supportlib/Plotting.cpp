@@ -45,17 +45,20 @@ void grph::plot_file(const std::string &path, const std::string &save_path) {
     p.title = fp.title;
     p.xlabel = fp.xlabel;
     p.ylabel = fp.ylabel;
+    std::cout << "Plotting data @ " << data.get() << " as '" << save_path << "'." << std::endl;
     p.make_plot(save_path);
 }
 
 void grph::plot_data(FileData* fd, const std::string &save_path) {
     Plot<double> p{fd};
+	std::cout << "Plotting data @ " << fd << " as '" << save_path << "'." << std::endl;
     p.make_plot(save_path);
 }
 
 void grph::plot_data(FileData* fd, const std::string &title, const std::string &save_path) {
     Plot<double> p{fd};
     p.title = title;
+	std::cout << "Plotting data @ " << fd << " as '" << save_path << "'." << std::endl;
     p.make_plot(save_path);
 }
 
@@ -64,5 +67,6 @@ void grph::plot_data(FileData *fd, const std::string &title, const std::string &
     p.title = title;
     p.xlabel = xlabel;
     p.ylabel = ylabel;
+	std::cout << "Plotting data @ " << fd << " as '" << save_path << "'." << std::endl;
     p.make_plot(save_path);
 }

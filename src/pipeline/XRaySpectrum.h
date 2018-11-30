@@ -12,9 +12,9 @@
 
 class XRaySpectrum {
 public:
-    XRaySpectrum() = delete;
-    explicit XRaySpectrum(const std::string& path) noexcept;
-    virtual ~XRaySpectrum();
+    XRaySpectrum() = delete ;
+    explicit XRaySpectrum(const std::string& path) ;
+    virtual ~XRaySpectrum() ;
 
 private:
     std::shared_ptr<FileData> fdata;

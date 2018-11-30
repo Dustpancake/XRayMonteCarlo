@@ -18,17 +18,17 @@ public:
     // - FileData however must perish after all instances
     //   to this class are deleted
     CurveFunc();
-    explicit CurveFunc(std::shared_ptr<FileData>) noexcept;
-    virtual ~CurveFunc() noexcept;
+    explicit CurveFunc(std::shared_ptr<FileData>) ;
+    virtual ~CurveFunc() ;
 
-    bool eval(double x, double y) const;
+    bool eval(double x, double y) const ;
 
 private:
-    int place(double x) const;
-    double interpolate3n(double x) const;
+    int place(double x) const ;
+    double interpolate3n(double x) const ;
 
     // p(x) returns height
-    double px(double x, int i[3]) const noexcept;
+    double px(double x, int i[3]) const ;
     std::vector<double> *xvec, *yvec;
     const int size;
 };

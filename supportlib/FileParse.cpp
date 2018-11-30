@@ -21,9 +21,12 @@ FileParse::FileParse(const std::string& path) noexcept
 std::shared_ptr<FileData> FileParse::parse() noexcept {
     std::shared_ptr<FileData> pt(new FileData);
     std::ifstream fs;
+
+    std::cout << "Reading file '" << path << "'." << std::endl;
+
     fs.open(path);
     if (!fs) {
-        std::cerr << "Failed to open file.";
+        std::cerr << "- Failed to open file.";
         return std::shared_ptr<FileData>(new FileData);
     }
 
@@ -44,6 +47,9 @@ std::shared_ptr<FileData> FileParse::parse() noexcept {
         pt->x.push_back(valx);
         pt->y.push_back(valy);
     }
+
+    std::cout << "+ Read " << pt->x.size() << " data point(s)." << std::endl;
+    std::cout << "+ Data @ " << pt.get() << "." << std::endl;
     return pt;
 }
 

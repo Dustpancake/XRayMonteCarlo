@@ -24,19 +24,19 @@ find_package(ROOT REQUIRED COMPONENTS RIO Net)
 if(ROOT)
     message(FATAL_ERROR "Could not find ROOT")
 else()
-    message("+ found ROOT")
+    message("+ Found ROOT")
 endif()
 
 # --- include ROOT
 if(${IS_LINAPP})
     include_directories(${ROOT_INCLUDE_DIRS})
-    message("+ on linapp server")
+    message("+ On linapp server")
 
     set(MY_FLAGS "-std=c++0x")
 else()
     set(CMAKE_MACOSX_RPATH 1)
     include(${ROOT_USE_FILE})
-    message("+ on personal computer")
+    message("+ On personal computer")
 
     set(MY_FLAGS "-O")
 
@@ -46,19 +46,16 @@ endif()
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_FLAGS}")
 
 # --- find source files
-file(GLOB SOURCE 
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+file(GLOB SOURCE
     "${CMAKE_CURRENT_SOURCE_DIR}/src/pipeline/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/pipeline/*.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/plottools/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/plottools/*.h"
     )
 
 # --- include Boost libraries
 find_package(Boost REQUIRED)
 if (Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
-    message("+ found Boost")
+    message("+ Found Boost")
 else()
     message(FATAL_ERROR "Could not find Boost.")
 endif ()
@@ -80,11 +77,14 @@ endif()
 # --- link ROOT with customs
 target_link_libraries(SupportLib ${ROOT_LIBRARIES})
 
-add_executable(run ${SOURCE})
+add_executable(run src/main.cpp ${SOURCE})
+add_executable(test src/tests.cpp ${SOURCE})
 
 
 # --- link with customs
 target_link_libraries(run SupportLib)
+target_link_libraries(test SupportLib)
 
 # ---- link with ROOT
 target_link_libraries(run ${ROOT_LIBRARIES})
+target_link_libraries(test ${ROOT_LIBRARIES})

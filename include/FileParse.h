@@ -15,13 +15,13 @@ struct FileData{
 };
 
 struct FileParse {
-    explicit FileParse(const std::string& path) noexcept;
-    virtual ~FileParse() noexcept;
+    explicit FileParse(const std::string& path) ;
+    virtual ~FileParse() ;
 
-    std::shared_ptr<FileData> parse() noexcept;
+    std::shared_ptr<FileData> parse() ;
     std::string path, title, xlabel, ylabel;
 private:
-    void to_latex();
+    void to_latex() ;
 };
 
 
