@@ -14,8 +14,8 @@ namespace pPrint {
 
 	void print(const std::vector<double>& v) {
 		std::cout << "Length = " << v.size() << std::endl;
-		for(const auto& i : v) {
-			std::cout << i << " ";
+		for(int i = 0; i < v.size(); ++i) {
+			std::cout << v.at(i) << " ";
 		}
 		std::cout << std::endl;
 	}

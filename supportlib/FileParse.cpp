@@ -11,11 +11,12 @@
 FileParse::~FileParse() {
 }
 
-FileParse::FileParse(const std::string& path)
-        :   path{path},
-            title{""},
-            xlabel{""},
-            ylabel{""} {
+FileParse::FileParse(const std::string& path) {
+    // had to change constructor for linapp server
+    this->path = path;
+    title = "";
+    xlabel = "";
+    ylabel = "";
 }
 
 std::shared_ptr<FileData> FileParse::parse() {

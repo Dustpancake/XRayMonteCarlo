@@ -20,8 +20,8 @@ bool CurveFunc::eval(double x, double y) const {
 int CurveFunc::place(double x) const {
     // returns index of first element greater than x
     int count = 0;
-    for (const auto& i : *xvec) {
-        if (x < i) break;
+    for (int i = 0; i < xvec->size(); ++i) {
+        if (x < xvec->at(i)) break;
         count++;
     }
     return count;
