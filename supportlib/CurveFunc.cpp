@@ -5,12 +5,12 @@
 #include <CurveFunc.h>
 #include <iostream>
 
-CurveFunc::CurveFunc(std::shared_ptr<FileData> fd) noexcept
+CurveFunc::CurveFunc(std::shared_ptr<FileData> fd)
     :   xvec{&(fd->x)},   yvec{&(fd->y)},
         size{(int)fd->x.size()}     {
 }
 
-CurveFunc::~CurveFunc() noexcept {
+CurveFunc::~CurveFunc() {
 }
 
 bool CurveFunc::eval(double x, double y) const {
@@ -45,7 +45,7 @@ double CurveFunc::interpolate3n(double x) const {
     return px(x, i_s);
 }
 
-double CurveFunc::px(double x, int i[3]) const noexcept {
+double CurveFunc::px(double x, int i[3]) const {
     // derived from mathematica website on interpolation http://mathworld.wolfram.com/LagrangeInterpolatingPolynomial.html
     double product, running_sum = 0;
     for(int k, j = 0; j < 3; j++) {

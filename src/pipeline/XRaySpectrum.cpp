@@ -4,7 +4,7 @@
 
 #include "XRaySpectrum.h"
 
-XRaySpectrum::XRaySpectrum(const std::string& path) noexcept {
+XRaySpectrum::XRaySpectrum(const std::string& path) {
     FileParse fp{path};
     fdata = fp.parse();
     title = fp.title;

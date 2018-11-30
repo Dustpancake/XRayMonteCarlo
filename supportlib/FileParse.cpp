@@ -8,17 +8,17 @@
 #include <sstream>
 #include <boost/algorithm/string.hpp>
 
-FileParse::~FileParse() noexcept {
+FileParse::~FileParse() {
 }
 
-FileParse::FileParse(const std::string& path) noexcept
+FileParse::FileParse(const std::string& path)
         :   path{path},
             title{""},
             xlabel{""},
             ylabel{""} {
 }
 
-std::shared_ptr<FileData> FileParse::parse() noexcept {
+std::shared_ptr<FileData> FileParse::parse() {
     std::shared_ptr<FileData> pt(new FileData);
     std::ifstream fs;
 
