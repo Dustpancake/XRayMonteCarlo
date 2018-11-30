@@ -32,7 +32,7 @@ if(${IS_LINAPP})
     include_directories(${ROOT_INCLUDE_DIRS})
     message("+ On linapp server")
 
-    set(MY_FLAGS "-std=c++0x")
+    set(MY_FLAGS "-std=c++0x -O2")
 else()
     set(CMAKE_MACOSX_RPATH 1)
     include(${ROOT_USE_FILE})
