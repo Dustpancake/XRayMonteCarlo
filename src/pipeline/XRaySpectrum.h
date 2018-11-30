@@ -9,6 +9,7 @@
 #include <memory>
 #include <FileParse.h>
 #include <PRNG.h>
+#include <vector>
 
 class XRaySpectrum {
 public:
@@ -16,9 +17,13 @@ public:
     explicit XRaySpectrum(const std::string& path) ;
     virtual ~XRaySpectrum() ;
 
-private:
-    std::shared_ptr<FileData> fdata;
+    void populate_random(int n) ;
+
+//private:
+    std::shared_ptr<XYData> fdata;
+    std::vector<double> photon_energy;
     std::string title;
+    double xmax, ymax;
 };
 
 

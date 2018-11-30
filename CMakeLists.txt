@@ -38,7 +38,7 @@ else()
     include(${ROOT_USE_FILE})
     message("+ On personal computer")
 
-    set(MY_FLAGS "-O")
+    set(MY_FLAGS "-O2")
 
     set(CMAKE_CXX_STANDARD 11)
 endif()

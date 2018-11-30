@@ -12,13 +12,13 @@ class CurveFunc {
 public:
     // using linear interpolation for now
 
-    // makes xvec and yvec point to the vectors in FileData, so
-    // do not need to delete the pointers as the FileData still exists
+    // makes xvec and yvec point to the vectors in XYData, so
+    // do not need to delete the pointers as the XYData still exists
     // - can safely let them run out of scope
-    // - FileData however must perish after all instances
+    // - XYData however must perish after all instances
     //   to this class are deleted
     CurveFunc();
-    explicit CurveFunc(std::shared_ptr<FileData>) ;
+    explicit CurveFunc(std::shared_ptr<XYData>) ;
     virtual ~CurveFunc() ;
 
     bool eval(double x, double y) const ;

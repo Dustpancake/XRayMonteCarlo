@@ -5,12 +5,14 @@
 #include <Plotting.h>
 #include <TCanvas.h>
 #include <TGraph.h>
+#include <TH1F.h>
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 template <typename T>
 struct Plot {
-    Plot(FileData* fd)
+    Plot(XYData* fd)
         :   title{"Graph"},
             xlabel{""},
             ylabel{""} {
@@ -49,24 +51,40 @@ void grph::plot_file(const std::string &path, const std::string &save_path) {
     p.make_plot(save_path);
 }
 
-void grph::plot_data(FileData* fd, const std::string &save_path) {
+void grph::plot_XY_data(XYData *fd, const std::string &save_path) {
     Plot<double> p{fd};
 	std::cout << "Plotting data @ " << fd << " as '" << save_path << "'." << std::endl;
     p.make_plot(save_path);
 }
 
-void grph::plot_data(FileData* fd, const std::string &title, const std::string &save_path) {
+void grph::plot_XY_data(XYData *fd, const std::string &title, const std::string &save_path) {
     Plot<double> p{fd};
     p.title = title;
 	std::cout << "Plotting data @ " << fd << " as '" << save_path << "'." << std::endl;
     p.make_plot(save_path);
 }
 
-void grph::plot_data(FileData *fd, const std::string &title, const std::string &xlabel, const std::string &ylabel, const std::string &save_path) {
+void grph::plot_XY_data(XYData *fd, const std::string &title, const std::string &xlabel, const std::string &ylabel,
+                        const std::string &save_path) {
     Plot<double> p{fd};
     p.title = title;
     p.xlabel = xlabel;
     p.ylabel = ylabel;
 	std::cout << "Plotting data @ " << fd << " as '" << save_path << "'." << std::endl;
     p.make_plot(save_path);
+}
+
+void grph::plot_histogram(const std::vector<double> & v, const std::string& save_path) {
+	double maximum = 1.5e4;
+	TH1F* h_Uniform = new TH1F("values", "random numbers",  100,  0, maximum);
+
+	for (int i = 0; i < v.size(); ++i) {
+		h_Uniform->Fill(v.at(i));
+	}
+
+	h_Uniform->SetMinimum(0);
+	TCanvas canvas;
+	h_Uniform->Draw();
+	canvas.Print(save_path.c_str());
+	delete h_Uniform;
 }

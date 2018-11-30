@@ -5,7 +5,7 @@
 #include <CurveFunc.h>
 #include <iostream>
 
-CurveFunc::CurveFunc(std::shared_ptr<FileData> fd)
+CurveFunc::CurveFunc(std::shared_ptr<XYData> fd)
     :   xvec{&(fd->x)},   yvec{&(fd->y)},
         size{(int)fd->x.size()}     {
 }
@@ -42,6 +42,7 @@ double CurveFunc::interpolate3n(double x) const {
         for (int j = 0; j < 3; j++) i_s[j] -= 1;
     }
     // interpolate
+    //std::cout << "p(x) = " << px(x, i_s) << std::endl;
     return px(x, i_s);
 }
 
@@ -49,10 +50,10 @@ double CurveFunc::px(double x, int i[3]) const {
     // derived from mathematica website on interpolation http://mathworld.wolfram.com/LagrangeInterpolatingPolynomial.html
     double product, running_sum = 0;
     for(int k, j = 0; j < 3; j++) {
-        product = (*yvec).at(i[j]);
+        product = yvec->at(i[j]);
         for (k = 0; k < 3; k++) {
             if (k == j) continue;
-            product *= (x - (*xvec).at(i[k])) / ((*xvec).at(i[j]) - (*xvec).at(i[k]));
+            product *= (x - xvec->at(i[k])) / (xvec->at(i[j]) - xvec->at(i[k]));
         }
         running_sum += product;
     }

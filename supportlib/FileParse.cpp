@@ -19,8 +19,8 @@ FileParse::FileParse(const std::string& path) {
     ylabel = "";
 }
 
-std::shared_ptr<FileData> FileParse::parse() {
-    std::shared_ptr<FileData> pt(new FileData);
+std::shared_ptr<XYData> FileParse::parse() {
+    std::shared_ptr<XYData> pt(new XYData);
     std::ifstream fs;
 
     std::cout << "Reading file '" << path << "'." << std::endl;
@@ -28,7 +28,7 @@ std::shared_ptr<FileData> FileParse::parse() {
     fs.open(path);
     if (!fs) {
         std::cerr << "- Failed to open file.";
-        return std::shared_ptr<FileData>(new FileData);
+        return std::shared_ptr<XYData>(new XYData);
     }
 
     {   // scoping cus lots of local variables that can be lost after

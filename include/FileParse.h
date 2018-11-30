@@ -9,7 +9,7 @@
 #include <memory>
 #include <string>
 
-struct FileData{
+struct XYData{
     std::vector<double> x;
     std::vector<double> y;
 };
@@ -18,7 +18,7 @@ struct FileParse {
     explicit FileParse(const std::string& path) ;
     virtual ~FileParse() ;
 
-    std::shared_ptr<FileData> parse() ;
+    std::shared_ptr<XYData> parse() ;
     std::string path, title, xlabel, ylabel;
 private:
     void to_latex() ;

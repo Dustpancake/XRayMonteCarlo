@@ -1,0 +1,3 @@
+- interpolation function midpoint needs to be adjusted
+- benchmark the photon energy generation
+- shorten interpolation function for speed

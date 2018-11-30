@@ -5,6 +5,7 @@
 // custom lib
 #include <Plotting.h>
 #include <Support.h>
+#include "pipeline/XRaySpectrum.h"
 
 #define MAX 1.0
 using namespace std;
@@ -37,7 +38,7 @@ void rngtest(){
 
 void test_fetching(){
 	// url http://henke.lbl.gov/tmp/xray7615.dat
-	system("curl http://henke.lbl.gov/tmp/xray7615.dat > ../xraydata/e_spectra/test.txt");
+	WEB::fetch("http://henke.lbl.gov/tmp/xray6654.dat", "../xraydata/e_spectra/test.txt");
 }
 
 /*
@@ -85,13 +86,19 @@ void plot_test() {
 	grph::plot_file("../xraydata/e_spectra/test.txt", "test_plot_func.png");
 
 	FileParse fp{"../xraydata/e_spectra/test1.txt"};
-	auto data = fp.parse();		// returns shared ptr to FileData
+	auto data = fp.parse();		// returns shared ptr to XYData
 
-	grph::plot_data(data.get(), "test_data_plot.png");
+	grph::plot_XY_data(data.get(), "test_data_plot.png");
 
 }
 
+void test_XRaySpectrum() {
+	XRaySpectrum xray{"../xraydata/e_spectra/test.txt"};
+	xray.populate_random(1e6);
+	grph::plot_histogram(xray.photon_energy, "generation_test.png");
+}
+
 int main() {
-	WEB::fetch("http://henke.lbl.gov/tmp/xray6654.dat", "../xraydata/e_spectra/test.txt");
+	test_XRaySpectrum();
 	return 0;
 }

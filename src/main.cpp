@@ -12,9 +12,9 @@ void plot_test() {
 	grph::plot_file("../xraydata/e_spectra/test.txt", "test_plot_func.png");
 
 	FileParse fp{"../xraydata/e_spectra/test1.txt"};
-	auto data = fp.parse();		// returns shared ptr to FileData
+	auto data = fp.parse();		// returns shared ptr to XYData
 
-	grph::plot_data(data.get(), "test_data_plot.png");
+	grph::plot_XY_data(data.get(), "test_data_plot.png");
 
 }
 
