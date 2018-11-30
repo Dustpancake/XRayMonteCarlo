@@ -37,12 +37,11 @@ double CurveFunc::interpolate3n(double x) const {
     // ensure not at edges of array, else shift
     if (i_s[0] < 0) {
         for (int j = 0; j < 3; j++) i_s[j] += 1;
-    }
-    if (i_s[2] > size-1) {
+    } else if (i_s[2] > size-1) {
         for (int j = 0; j < 3; j++) i_s[j] -= 1;
     }
     // interpolate
-    //std::cout << "p(x) = " << px(x, i_s) << std::endl;
+    // std::cout << "p(x) = " << px(x, i_s) << std::endl;
     return px(x, i_s);
 }
 

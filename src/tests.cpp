@@ -81,7 +81,7 @@ void interpolation_test() {
 }
 */
 
-void plot_test() {
+void test_plot() {
 
 	grph::plot_file("../xraydata/e_spectra/test.txt", "test_plot_func.png");
 
@@ -99,6 +99,8 @@ void test_XRaySpectrum() {
 }
 
 int main() {
+	//test_fetching();
+	//test_plot();
 	test_XRaySpectrum();
 	return 0;
 }
