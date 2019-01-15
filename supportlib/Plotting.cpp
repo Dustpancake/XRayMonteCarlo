@@ -35,7 +35,23 @@ struct Plot {
         delete graph;
     }
 
-    T *x, *y;
+    // Plot with Both Logarithmic Axes (tailored for Attenuation Length plots)
+	void make_plot_log(const std::string& save_path) {
+		std::stringstream ss;
+		ss << title << ";" << xlabel << ";" << ylabel;
+		TGraph *graph = new TGraph(n, x, y);
+		graph->SetTitle(ss.str().c_str());
+
+		TCanvas c;
+		c.SetLogy();
+		c.SetLogx();
+		graph->Draw();
+		c.Print(save_path.c_str());
+		delete graph;
+	}
+
+
+	T *x, *y;
     int n;
     std::string title, xlabel, ylabel;
 };
@@ -49,6 +65,17 @@ void grph::plot_file(const std::string &path, const std::string &save_path) {
     p.ylabel = fp.ylabel;
     std::cout << "Plotting data @ " << data.get() << " as '" << save_path << "'." << std::endl;
     p.make_plot(save_path);
+}
+
+void grph::plot_file_log(const std::string &path, const std::string &save_path) {
+	FileParse fp{path};
+	auto data = fp.parse();
+	Plot<double> p{data.get()};
+	p.title = fp.title;
+	p.xlabel = fp.xlabel;
+	p.ylabel = fp.ylabel;
+	std::cout << "Plotting data @ " << data.get() << " as '" << save_path << "'." << std::endl;
+	p.make_plot_log(save_path);
 }
 
 void grph::plot_XY_data(XYData *fd, const std::string &save_path) {
@@ -74,9 +101,8 @@ void grph::plot_XY_data(XYData *fd, const std::string &title, const std::string 
     p.make_plot(save_path);
 }
 
-void grph::plot_histogram(const std::vector<double> & v, const std::string& save_path) {
-	double maximum = 1.5e4;
-	TH1F* h_Uniform = new TH1F("values", "random numbers",  100,  0, maximum);
+void grph::plot_histogram(const std::vector<double> & v, const std::string& save_path, double minimum, double maximum, double bins) {
+	TH1F* h_Uniform = new TH1F("values", "hist",  bins,  minimum, maximum);
 
 	for (int i = 0; i < v.size(); ++i) {
 		h_Uniform->Fill(v.at(i));

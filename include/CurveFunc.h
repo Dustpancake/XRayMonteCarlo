@@ -22,6 +22,7 @@ public:
     virtual ~CurveFunc() ;
 
     bool eval(double x, double y) const ;
+    double y_val(double x) const ;
 
 private:
     int place(double x) const ;

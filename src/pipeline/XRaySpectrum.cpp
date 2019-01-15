@@ -49,3 +49,10 @@ void XRaySpectrum::populate_random(int n) {
 
 }
 
+XRaySpectrum::XRaySpectrum(const XRaySpectrum &xr) {
+	fdata = std::make_shared<XYData>(*(xr.fdata));
+	title = xr.title;
+	xmax = xr.xmax;
+	ymax = xr.ymax;
+}
+

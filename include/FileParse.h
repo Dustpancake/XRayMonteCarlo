@@ -10,8 +10,8 @@
 #include <string>
 
 struct XYData{
-    std::vector<double> x;
-    std::vector<double> y;
+    std::vector<double> x ;
+    std::vector<double> y ;
 };
 
 struct FileParse {
@@ -23,6 +23,10 @@ struct FileParse {
 private:
     void to_latex() ;
 };
+
+namespace tofile {
+	void write(const std::string &path, const std::stringstream& ss) ;
+}
 
 
 #endif //XRAYMONTECARLO_FILEPARSE_H

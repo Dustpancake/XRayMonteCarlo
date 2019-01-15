@@ -27,7 +27,7 @@ std::shared_ptr<XYData> FileParse::parse() {
 
     fs.open(path);
     if (!fs) {
-        std::cerr << "- Failed to open file.";
+        std::cerr << "[-] Failed to open file.";
         return std::shared_ptr<XYData>(new XYData);
     }
 
@@ -49,8 +49,8 @@ std::shared_ptr<XYData> FileParse::parse() {
         pt->y.push_back(valy);
     }
 
-    std::cout << "+ Read " << pt->x.size() << " data point(s)." << std::endl;
-    std::cout << "+ Data @ " << pt.get() << "." << std::endl;
+    std::cout << "[+] Read " << pt->x.size() << " data point(s)." << std::endl;
+    std::cout << "[+] Data @ " << pt.get() << "." << std::endl;
     return pt;
 }
 
@@ -62,4 +62,13 @@ void FileParse::to_latex() {
      */
 }
 
+void tofile::write(const std::string &path, const std::stringstream &ss) {
+	std::ofstream fs;
+	fs.open(path);
+	if (fs) {
 
+	} else {
+		std::cerr << "failed to open file '" << path << "'" << std::endl;
+	}
+	fs.close();
+}

@@ -6,18 +6,23 @@
 #include <Plotting.h>
 #include <Support.h>
 #include "pipeline/XRaySpectrum.h"
+#include "pipeline/AttenuationLengths.h"
+#include "pipeline/EHistogram.h"
+#include <TH1F.h>
+#include <TCanvas.h>
+#include <Support.h>
 
 #define MAX 1.0
 using namespace std;
 
-/*
-void rngtest(){
+
+/*void rngtest(){
     TH1F* h_Uniform = new TH1F("h_Uniform", "uniform random numbers",  100,  0, MAX);
     std::clock_t start;
 
 	start = std::clock();
 	for (int i = 0; i<100000000; i++) {
-		double r = supportlib::rdouble(0, MAX);
+		double r = prng::rdouble(0, MAX);
 		// cout << r << endl;
 		h_Uniform->Fill(r);
 	}
@@ -25,15 +30,15 @@ void rngtest(){
 
 
     start = std::clock();
-    supportlib::ncallback(100000000, 0, MAX, [&](double r){ h_Uniform->Fill(r); });
+    prng::ncallback(100000000, 0, MAX, [&](double r){ h_Uniform->Fill(r); });
     std::cout << "time taken = " << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
 
     h_Uniform->SetMinimum(0);
     TCanvas canvas;
     h_Uniform->Draw();
     canvas.Print("output.png");
-}
-*/
+}*/
+
 
 
 void test_fetching(){
@@ -93,14 +98,32 @@ void test_plot() {
 }
 
 void test_XRaySpectrum() {
-	XRaySpectrum xray{"../xraydata/e_spectra/test.txt"};
+	XRaySpectrum xray{"../xraydata/e_spectra/test1.txt"};
 	xray.populate_random(1e6);
-	grph::plot_histogram(xray.photon_energy, "generation_test.png");
+	grph::plot_histogram(xray.photon_energy, "generation_test2.png", 0, 1.5e4, 100);
+}
+
+void test_late() {
+	AttenuationLengths at{"../xraydata/atten_lengths/test.txt"};
+	XRaySpectrum xr{"../xraydata/e_spectra/test.txt"};
+
+	EHistogram eh{at, xr};
+
+	eh.set_x(1);
+	PhotonData pd = eh.n_probability(1e5);
+
+	grph::plot_histogram(eh.through, "test_out.png", 0, 1.5e4, 100);
 }
 
 int main() {
-	//test_fetching();
-	//test_plot();
-	test_XRaySpectrum();
+	// test_fetching();
+	// test_plot();
+	 test_XRaySpectrum();
+	// rngtest();
+
+	//test_late();
+
+	//grph::plot_file_log("../xraydata/atten_lengths/test.txt", "atten.png");
+
 	return 0;
 }

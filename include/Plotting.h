@@ -11,6 +11,7 @@
 
 namespace grph {
     void plot_file(const std::string &path, const std::string &save_path);
+    void plot_file_log(const std::string &path, const std::string &save_path);
 
     void plot_XY_data(XYData *fd, const std::string &save_path);
 
@@ -22,7 +23,7 @@ namespace grph {
 					  const std::string &ylabel,
 					  const std::string &save_path);
 
-    void plot_histogram(const std::vector<double>& v, const std::string& save_path);
+    void plot_histogram(const std::vector<double>& v, const std::string& save_path, double minimum, double maximum, double bins);
 
 };
 

@@ -5,11 +5,6 @@
 #include <CurveFunc.h>
 #include <iostream>
 
-CurveFunc::CurveFunc(std::shared_ptr<XYData> fd)
-    :   xvec{&(fd->x)},   yvec{&(fd->y)},
-        size{(int)fd->x.size()}     {
-}
-
 CurveFunc::~CurveFunc() {
 }
 
@@ -19,12 +14,31 @@ bool CurveFunc::eval(double x, double y) const {
 
 int CurveFunc::place(double x) const {
     // returns index of first element greater than x
-    int count = 0;
+    /*int count = 0;
     for (int i = 0; i < xvec->size(); ++i) {
         if (x < xvec->at(i)) break;
         count++;
     }
-    return count;
+    //return count;*/
+
+    int low = 0, i, old_i, high = xvec->size();
+    double val;
+    i = high/2;
+    do {
+        old_i = i;
+        val = xvec->at(i);
+        if (x < val) {
+            high = i;
+            i = high/2;
+        } else if (x>val) {
+            low = i;
+            i = low + (high-low)/2;
+        }
+    } while(abs(i-old_i) > 1);
+    if (old_i > i) i = old_i;
+
+    //std::cout << count << " vs " << i << std::endl;
+    return i;
 }
 
 double CurveFunc::interpolate3n(double x) const {
@@ -58,4 +72,14 @@ double CurveFunc::px(double x, int i[3]) const {
     }
     return running_sum;
 }
+
+double CurveFunc::y_val(double x) const {
+    return interpolate3n(x);
+}
+
+CurveFunc::CurveFunc(std::shared_ptr<XYData> fd)
+	:   xvec{&(fd->x)},   yvec{&(fd->y)},
+			size{(int)fd->x.size()}     {
+}
+
 

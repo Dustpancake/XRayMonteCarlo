@@ -77,6 +77,7 @@ endif()
 # --- link ROOT with customs
 target_link_libraries(SupportLib ${ROOT_LIBRARIES})
 
+# -- create Exes
 add_executable(run src/main.cpp ${SOURCE})
 add_executable(test src/tests.cpp ${SOURCE})
 
