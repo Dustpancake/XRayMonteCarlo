@@ -59,13 +59,13 @@ PhotonData::PhotonData(const std::vector<double> &evec, double t, const std::str
 	XRay_title = xr;
 	thickness = t;
 
-	energies = evec;
+	//energies = evec;
 
 	// describe data
 	mean = std::accumulate(evec.begin(), evec.end(), 0.0) / evec.size();
 	if (isnan(mean)) {
 		mean = 0;
-		std::cout << energies.size() << std::endl;
+		//std::cout << energies.size() << std::endl;
 	}
 	// error - standard deviation
 	std = std::inner_product(evec.begin(), evec.end(), evec.begin(), 0.0);

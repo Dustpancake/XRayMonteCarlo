@@ -28,6 +28,7 @@ namespace WEB {
 		std::stringstream ss;
 		ss << "curl " << url << " > " << save_path;
 		std::system(ss.str().c_str());
+		std::cout << "[*] Saved to file '" << save_path << "'." << std::endl;
 	}
 
 }
