@@ -29,5 +29,4 @@ private:
     double xmax, ymax;
 };
 
-
 #endif //XRAYMONTECARLO_XRAYSPECTRUM_H

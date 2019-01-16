@@ -24,8 +24,7 @@ void XRaySpectrum::populate_random(int n) {
     CurveFunc func{fdata};
 
     // generate 2 random points and if evaluate under curve
-    // append to xvals and yvals vectors
-
+    // appends energy to vector
     // will generate n successful points
 
     std::cout << "Generating " << n << " photon energies." << std::endl;
@@ -35,7 +34,6 @@ void XRaySpectrum::populate_random(int n) {
     for (int i = 0; i < n;) {
         x = prng::rdouble(0, xmax);
         y = prng::rdouble(0, ymax * 1000);
-        //std::cout << x << ", " << y << std::endl;
         if (func.eval(x, y)) {
             photon_energy.emplace_back(x);
             ++i;

@@ -37,6 +37,11 @@ private:
 	double x_dist;
 };
 
+namespace save {
+	void photon_struct(const std::string& path, const PhotonData& pdata);
+	void photon_vector(const std::string& path, const std::vector<PhotonData>& pvec);
+}
+
 std::ostream& operator<<(std::ostream &out, const PhotonData& pd);
 
 

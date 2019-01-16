@@ -62,13 +62,14 @@ void FileParse::to_latex() {
      */
 }
 
-void tofile::write(const std::string &path, const std::stringstream &ss) {
-	std::ofstream fs;
-	fs.open(path);
-	if (fs) {
-
-	} else {
-		std::cerr << "failed to open file '" << path << "'" << std::endl;
-	}
-	fs.close();
+void tofile::write(const std::string &path, const std::string& ss) {
+    std::ofstream fs;
+    fs.open(path);
+    if (fs) {
+        fs << ss;
+    } else {
+        std::cerr << "failed to open file '" << path << "'" << std::endl;
+        return;
+    }
+    fs.close();
 }

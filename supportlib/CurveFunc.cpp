@@ -14,13 +14,6 @@ bool CurveFunc::eval(double x, double y) const {
 
 int CurveFunc::place(double x) const {
     // returns index of first element greater than x
-    /*int count = 0;
-    for (int i = 0; i < xvec->size(); ++i) {
-        if (x < xvec->at(i)) break;
-        count++;
-    }
-    //return count;*/
-
     int low = 0, i, old_i, high = xvec->size();
     double val;
     i = high/2;
@@ -36,8 +29,6 @@ int CurveFunc::place(double x) const {
         }
     } while(abs(i-old_i) > 1);
     if (old_i > i) i = old_i;
-
-    //std::cout << count << " vs " << i << std::endl;
     return i;
 }
 

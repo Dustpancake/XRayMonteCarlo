@@ -25,6 +25,8 @@ namespace grph {
 
     void plot_histogram(const std::vector<double>& v, const std::string& save_path, double minimum, double maximum, double bins);
 
+    void plot_mean_thickness(XYData *fd, double* std, double N, double dx, const std::string& save_path);
+
 };
 
 #endif //XRAYMONTECARLO_PLOTTING_H

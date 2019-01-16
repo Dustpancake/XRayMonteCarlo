@@ -5,6 +5,7 @@
 #include <Plotting.h>
 #include <TCanvas.h>
 #include <TGraph.h>
+#include <TGraphErrors.h>
 #include <TH1F.h>
 #include <iostream>
 #include <sstream>
@@ -35,7 +36,24 @@ struct Plot {
         delete graph;
     }
 
-    // Plot with Both Logarithmic Axes (tailored for Attenuation Length plots)
+	void make_plot_errors(const std::string& save_path, double* errors) {
+		std::stringstream ss;
+		ss << title << ";" << xlabel << ";" << ylabel;
+		double xerr[n];
+		for(int i = 0; i < n; ++i) {
+			xerr[i] = 0;
+		}
+		TGraphErrors *graph = new TGraphErrors(n, x, y, xerr, errors);
+		graph->SetTitle(ss.str().c_str());
+
+		TCanvas c;
+		graph->Draw();
+		c.Print(save_path.c_str());
+		delete graph;
+	}
+
+
+	// Plot with Both Logarithmic Axes (tailored for Attenuation Length plots)
 	void make_plot_log(const std::string& save_path) {
 		std::stringstream ss;
 		ss << title << ";" << xlabel << ";" << ylabel;
@@ -113,4 +131,15 @@ void grph::plot_histogram(const std::vector<double> & v, const std::string& save
 	h_Uniform->Draw();
 	canvas.Print(save_path.c_str());
 	delete h_Uniform;
+}
+
+void grph::plot_mean_thickness(XYData *fd, double* std, double N, double dx, const std::string &save_path) {
+	Plot<double> p{fd};
+	std::stringstream ss;
+	ss << "N = " << N << ", dx = " << dx;
+	p.title = ss.str();
+	p.xlabel = "thickness x (mm)";
+	p.ylabel = "mean energy E (eV)";
+	std::cout << "Plotting mean energy vs thickness @ " << fd << " as '" << save_path << "'." << std::endl;
+	p.make_plot_errors(save_path, std);
 }

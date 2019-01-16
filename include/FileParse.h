@@ -25,7 +25,7 @@ private:
 };
 
 namespace tofile {
-	void write(const std::string &path, const std::stringstream& ss) ;
+	void write(const std::string &path, const std::string& ss) ;
 }
 
 
