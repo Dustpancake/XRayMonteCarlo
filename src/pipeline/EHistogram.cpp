@@ -9,6 +9,7 @@
 #include <PRNG.h>
 #include <numeric>
 #include <FileParse.h>
+#include <Plotting.h>
 
 EHistogram::EHistogram(const AttenuationLengths &at, const XRaySpectrum &xr) {
 	at_length = at;
@@ -27,6 +28,8 @@ PhotonData EHistogram::n_probability(int n) {
 	through.clear();
 	absorbed.clear();
 	xr_spectrum.populate_random(n);
+
+	grph::plot_histogram(xr_spectrum.photon_energy, "spectrum.png", 0, 15e3, 100);
 
 	double energy, lambda, x, count = 0;
 	for (int i = 0; i < xr_spectrum.photon_energy.size(); ++i) {
@@ -59,7 +62,7 @@ PhotonData::PhotonData(const std::vector<double> &evec, double t, const std::str
 	XRay_title = xr;
 	thickness = t;
 
-	//energies = evec;
+	energies = evec;
 
 	// describe data
 	mean = std::accumulate(evec.begin(), evec.end(), 0.0) / evec.size();
@@ -89,7 +92,7 @@ void save::photon_struct(const std::string& path, const PhotonData &pdata) {
 	ss << "mean = " << pdata.mean << ", std = " << pdata.std << ", x = " << pdata.thickness << "\n";
 	// save distribution
 	for (int i = 0; i < pdata.energies.size(); ++i) {
-		ss << pdata.energies.at(i) << ",\n";
+		ss << pdata.energies.at(i) << "\n";
 	}
 	tofile::write(path, ss.str());
 }

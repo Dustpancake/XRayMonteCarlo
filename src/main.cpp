@@ -48,7 +48,16 @@ void thickness(double N, double dx, double min, double max, const std::string& a
 }
 
 void single(double N, double x, const std::string& at_path, const std::string& xr_path) {
-	// TODO
+	AttenuationLengths at{at_path};
+	XRaySpectrum xr{xr_path};
+
+	EHistogram eh{at, xr};
+	eh.set_x(x);
+	PhotonData pd = eh.n_probability(N);
+	save::photon_struct("output.txt", pd);
+	std::cout << "[*] Finished simulation." << std::endl;
+
+	grph::plot_histogram(pd.energies, "output.png", 2e3, 15e3, 100);
 }
 
 void plot(const std::string& file, const std::string& path) {
@@ -62,31 +71,35 @@ void logplot(const std::string& file, const std::string& path) {
 }
 
 void usage() {
-	std::cout << "Usage: " << std::endl; //TODO
+	std::cout << "\nUsage: select command from \n"
+			  <<"- simulate\n- fetch\n- plot\n- logplot\n- errorplot\n- single"
+			  <<"\n\nExample: ./run simulate " << std::endl;
 }
 
 void run_usage() {
-	std::cout << "Usage: " << std::endl; //TODO
+	std::cout << "\nUsage: simulate N dx min_x max_x att_length_path e_spectra_path"
+			  << "\ne.g.: simulate 1e7 1 1 100 ../xraydata/atten_lengths/test.txt ../xraydata/e_spectra/test.txt"<< std::endl;
 }
 
 void fetch_usage() {
-	std::cout << "Usage: " << std::endl; //TODO
+	std::cout << "\nUsage: fetch URL save_path" << std::endl;
 }
 
 void plot_usage() {
-	std::cout << "Usage: " << std::endl; //TODO
+	std::cout << "\nUsage: " << std::endl; //TODO
 }
 
 void logplot_usage() {
-	std::cout << "Usage: " << std::endl; //TODO
+	std::cout << "\nUsage: " << std::endl; //TODO
 }
 
 void errorplot_usage() {
-	std::cout << "Usage: " << std::endl; //TODO
+	std::cout << "\nUsage: " << std::endl; //TODO
 }
 
 void single_usage() {
-	std::cout << "Usage: " << std::endl; //TODO
+	std::cout << "\nUsage: single N x att_length_path e_spectra_path"
+			  << "\ne.g.: single 1e7 1 ../xraydata/atten_lengths/test.txt ../xraydata/e_spectra/test.txt"<< std::endl;
 }
 
 int main(int argc, char** argv) {
@@ -96,7 +109,7 @@ int main(int argc, char** argv) {
 		return 0;
 	}
 	std::string command{argv[1]};
-	std::cout << "command = " << command << std::endl;
+	//std::cout << "command = " << command << std::endl;
 
 // ------------------------------------------------ FETCH
 	if (command.compare("fetch") == 0) {
