@@ -62,7 +62,7 @@ PhotonData::PhotonData(const std::vector<double> &evec, double t, const std::str
 	XRay_title = xr;
 	thickness = t;
 
-	energies = evec;
+	//energies = evec;
 
 	// describe data
 	mean = std::accumulate(evec.begin(), evec.end(), 0.0) / evec.size();

@@ -57,7 +57,8 @@ void single(double N, double x, const std::string& at_path, const std::string& x
 	save::photon_struct("output.txt", pd);
 	std::cout << "[*] Finished simulation." << std::endl;
 
-	grph::plot_histogram(pd.energies, "output.png", 2e3, 15e3, 100);
+
+	grph::plot_histogram(pd.energies, "output.png", itt::min_element(pd.energies)-1e2, itt::max_element(pd.energies)+1e2, 100);
 }
 
 void plot(const std::string& file, const std::string& path) {

@@ -33,5 +33,30 @@ namespace WEB {
 
 }
 
+namespace itt {
+	template <typename T>
+	T max_element(const std::vector<T>& vec) {
+		T big = 0;
+		for (int i = 0; i < vec.size(); ++i) {
+			T val = vec.at(i);
+			if (val > big) {
+				big = val;
+			}
+		}
+		return big;
+	}
+
+	template <typename T>
+	T min_element(const std::vector<T>& vec) {
+		T small = 1e6;
+		for (int i = 0; i < vec.size(); ++i) {
+			T val = vec.at(i);
+			if (val < small) {
+				small = val;
+			}
+		}
+		return small;
+	}
+}
 
 #endif //XRAYMONTECARLO_PRETTYPRINTS_H

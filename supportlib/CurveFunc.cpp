@@ -23,7 +23,7 @@ int CurveFunc::place(double x) const {
         if (x < val) {
             high = i;
             i = high/2;
-        } else if (x>val) {
+        } else {
             low = i;
             i = low + (high-low)/2;
         }
@@ -53,9 +53,9 @@ double CurveFunc::interpolate3n(double x) const {
 double CurveFunc::px(double x, int i[3]) const {
     // derived from mathematica website on interpolation http://mathworld.wolfram.com/LagrangeInterpolatingPolynomial.html
     double product, running_sum = 0;
-    for(int k, j = 0; j < 3; j++) {
+    for(int k, j = 0; j < 3; ++j) {
         product = yvec->at(i[j]);
-        for (k = 0; k < 3; k++) {
+        for (k = 0; k < 3; ++k) {
             if (k == j) continue;
             product *= (x - xvec->at(i[k])) / (xvec->at(i[j]) - xvec->at(i[k]));
         }
