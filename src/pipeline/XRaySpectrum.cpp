@@ -33,7 +33,7 @@ void XRaySpectrum::populate_random(int n) {
     int fails = 0;
     for (int i = 0; i < n;) {
         x = prng::rdouble(0, xmax);
-        y = prng::rdouble(0, ymax * 1000);
+        y = prng::rdouble(0, ymax*500);
         if (func.eval(x, y)) {
             photon_energy.emplace_back(x);
             ++i;

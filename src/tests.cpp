@@ -16,28 +16,21 @@
 using namespace std;
 
 
-/*void rngtest(){
+void rngtest(){
     TH1F* h_Uniform = new TH1F("h_Uniform", "uniform random numbers",  100,  0, MAX);
     std::clock_t start;
 
 	start = std::clock();
-	for (int i = 0; i<100000000; i++) {
+	for (int i = 0; i<1e6; i++) {
 		double r = prng::rdouble(0, MAX);
 		// cout << r << endl;
 		h_Uniform->Fill(r);
 	}
-	std::cout << "time taken = " << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
-
-
-    start = std::clock();
-    prng::ncallback(100000000, 0, MAX, [&](double r){ h_Uniform->Fill(r); });
-    std::cout << "time taken = " << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
-
     h_Uniform->SetMinimum(0);
     TCanvas canvas;
     h_Uniform->Draw();
     canvas.Print("output.png");
-}*/
+}
 
 
 
@@ -90,16 +83,21 @@ void test_plot() {
 
 	grph::plot_file("../xraydata/e_spectra/test.txt", "test_plot_func.png");
 
-	FileParse fp{"../xraydata/e_spectra/test1.txt"};
+	FileParse fp{"../xraydata/e_spectra/test.txt"};
 	auto data = fp.parse();		// returns shared ptr to XYData
+
+	double max = itt::max_element(data->y);
+	for (int i = 0; i < data->y.size(); ++i) {
+		data->y[i] *= 360e3 / max;
+	}
 
 	grph::plot_XY_data(data.get(), "test_data_plot.png");
 
 }
 
 void test_XRaySpectrum() {
-	XRaySpectrum xray{"../xraydata/e_spectra/test1.txt"};
-	xray.populate_random(1e6);
+	XRaySpectrum xray{"../xraydata/e_spectra/test.txt"};
+	xray.populate_random(1e7);
 	grph::plot_histogram(xray.photon_energy, "generation_test2.png", 0, 1.5e4, 100);
 }
 
@@ -118,7 +116,7 @@ void test_late() {
 int main() {
 	// test_fetching();
 	// test_plot();
-	 test_XRaySpectrum();
+	test_XRaySpectrum();
 	// rngtest();
 
 	//test_late();
